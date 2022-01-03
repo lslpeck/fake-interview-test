@@ -10,7 +10,7 @@
 #       and understand the problem they are trying 
 #       to solve! 
 #-----------------------------------------------
-# Your colleague needs to make a scatterplot 
+#Your colleague needs to make a scatterplot 
 # showing how sales of an item relates to 
 # an item's visiblity in their ranking system. 
 # They then want to try to predict sales with 
@@ -20,25 +20,26 @@
 # choices might not be a good idea and 
 # suggest a clearer route forward. 
 #-----------------------------------------------
-library(Tidyverse)
+library(tidyverse)
+library(ggplot2)
 
 df <- read_csv("big_mart.csv",    )
 
 View(df)
 
 df %>%
-  ggplot(aes(x = item_outlet_sales, 
-             y = item_visibility,
-             color = item_type)) + 
+  ggplot(aes(x = Item_Outlet_Sales, 
+             y = Item_Visibility,
+             color = Item_Type)) + 
   geom_point() +
-  geom_smooth(method = "lm", se = False) +
+  geom_smooth(method = "lm", se = FALSE) +
   labs(title = "Sales Predict Item Visibility",
        x = "Sales",
        y = "Item Visibility") +
   theme_minimal()
 
 df %>%
-  ggplot(aes(x = Item_Outlet_Sales, 
+  ggplot(mapping = aes(x = Item_Outlet_Sales,
              y = Item_Visibility,
              color = Item_Type)) + 
   geom_point() %>%
@@ -59,7 +60,7 @@ predict_model <- lm(Item_Outlet_Sales ~ ., data = df)
 residuals_df <- predict_model$residuals %>% as_tibble()
 
 residuals_df %>%
-  ggplot( aes(x = residuals)) +
+  ggplot(mapping = aes(x = residuals)) +
   geom_histogram() +
   theme_minimal() +
   labs(title = "Why Do I Have To Make This Plot?")
